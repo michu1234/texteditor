@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <button @click="testowa">klik</button>
+    <button @click="testowa">Start</button>
 
     <p>
       * Select area, then click button:
@@ -11,39 +11,38 @@
 <br>
 <hr>
 
-    <span @keypress.enter="checkData" :style="globalStyles" ref="msg" contenteditable="true">
+    <span :style="globalStyles">
 
-      <span :style="spanFirst">{{entryData["inner-elements"][0].text}} </span>
+      <span v-html="msg" @blur="checkData" :style="spanFirst" ref="msg" contenteditable="true"></span>
     </span>
     <br>
 
-    <span @keypress.enter="checkData" :style="globalStyles" ref="msg" contenteditable="true">
+    <span :style="globalStyles">
 
 
-      <span @keypress.enter="checkData2" ref="msg2" contenteditable="true">{{entryData["inner-elements"][2].text}}</span>
-
-
-
-
-
-
-
-      <span :style="spanSecond" @keypress.enter="checkData3" ref="msg3" contenteditable="true" class="text--purple">
-
-        {{entryData["inner-elements"][3].text}}</span>
+      <span v-html="msg2" @blur="checkData2" ref="msg2" contenteditable="true"></span>
 
 
 
 
 
-      <span :style="spanThird" @keypress.enter="checkData4" ref="msg4" contenteditable="true" class="text--pink">
 
-        {{entryData["inner-elements"][4].text}}
+
+      <span v-html="msg3" :style="spanSecond" @blur="checkData3" ref="msg3" contenteditable="true">
+
+        </span>
+
+
+
+
+
+      <span v-html="msg4" :style="spanThird" @blur="checkData4" ref="msg4" contenteditable="true">
+
+      
 
       </span>
     </span>
 
-    <p v-html="asdf"></p>
 
   </div>
 
@@ -79,10 +78,15 @@
         return data.json();
       }).then(entry => {
         this.entryData = entry;
+     
+        this.msg4 = this.entryData["inner-elements"][4].text;
+        this.msg3 = this.entryData["inner-elements"][3].text;
+        this.msg2 = this.entryData["inner-elements"][2].text;
+        this.msg = this.entryData["inner-elements"][0].text;
       });
 
 
-
+      
 
 
 
@@ -93,7 +97,26 @@
     },
     methods: {
       checkData() {
+   
         this.msg = this.$refs.msg.textContent;
+
+         String.prototype.splice = function(
+            index,
+            howManyToDelete,
+            stringToInsert /* [, ... N-1, N] */
+            ){
+            var characterArray = this.split( "" );
+            Array.prototype.splice.apply(
+                characterArray,
+                arguments
+            );
+            return(
+                characterArray.join( "" )
+            );
+        };
+    
+this.msg = this.msg.splice(1,0,'</span></span><br><span :style="globalStyles"><span :style="spanFirst"> ')
+
       },
       checkData2() {
         this.msg2 = this.$refs.msg2.textContent;
@@ -103,6 +126,7 @@
       },
       checkData4() {
         this.msg4 = this.$refs.msg4.textContent;
+        console.log(this.msg, this.msg2, this.msg3, this.msg4);
       },
       testowa() {
         // ================= GENERAL STYLES =========
@@ -142,7 +166,7 @@
       }
 
     },
-    mounted() {
+    beforeMount() {
 
 
 
