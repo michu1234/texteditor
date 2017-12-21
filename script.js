@@ -1,25 +1,38 @@
 Vue.component('text-editor', {
     render: function (createElement) {
-        return createElement(this.jsonFILE["inner-elements"][0].type, {
-                style: this.jsonFILE.styles,
-                attrs: {
-                    contentEditable: "true"
-                }
-            },
+        return createElement('div',
 
-           [
-            this.jsonFILE["inner-elements"][0].text,
-            createElement('br', ''),
-            createElement(this.jsonFILE["inner-elements"][3].type, this.jsonFILE["inner-elements"][2].text),
-            createElement(this.jsonFILE["inner-elements"][3].type, {
-                style: this.jsonFILE["inner-elements"][3].styles
-            }, this.jsonFILE["inner-elements"][3].text),
-            createElement(this.jsonFILE["inner-elements"][4].type, {
-                style: this.jsonFILE["inner-elements"][4].styles
-            }, this.jsonFILE["inner-elements"][4].text)
-        ]
 
-        )},
+            [
+                createElement(this.jsonFILE["inner-elements"][0].type, {
+                    style: this.jsonFILE.styles,
+                    attrs: {
+                        contentEditable: "true"
+                    }
+                }, this.jsonFILE["inner-elements"][0].text),
+                createElement('br', ''),
+                createElement(this.jsonFILE["inner-elements"][0].type, {
+                    style: this.jsonFILE.styles,
+                    attrs: {
+                        contentEditable: "true"
+                    }
+                }, [createElement(this.jsonFILE["inner-elements"][3].type, this.jsonFILE["inner-elements"][2].text),
+                    createElement(this.jsonFILE["inner-elements"][3].type, {
+                        style: this.jsonFILE["inner-elements"][3].styles
+                    }, this.jsonFILE["inner-elements"][3].text),
+                    createElement(this.jsonFILE["inner-elements"][4].type, {
+                        style: this.jsonFILE["inner-elements"][4].styles
+                    }, this.jsonFILE["inner-elements"][4].text)
+                ], '')
+            ]
+
+
+
+
+
+
+        )
+    },
     data() {
         return {
             content: 'dasfasdfsdf',
